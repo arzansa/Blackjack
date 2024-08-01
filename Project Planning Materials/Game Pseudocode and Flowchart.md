@@ -101,8 +101,11 @@ deal() {
 
 
 
-implement this wrapping text on the table:
-![[Screenshot 2024-08-01 at 2.06.53 PM.png]]
+implement wrapping text on the table:
+"BLACKJACK PAYS 3 TO 2"
+"DEALER MUST STAND ON 17 AND DRAW TO 16"
+"INSURANCE PAYS 2 TO 1"
+
 
 
 ![[Screenshot 2024-08-01 at 2.18.52 PM.png]]
