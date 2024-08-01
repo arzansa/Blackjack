@@ -1,5 +1,5 @@
 Blackjack:
-![[Screenshot 2024-08-01 at 12.13.03 PM.png]]
+![[Flowchart.png]]
 
 
 
@@ -108,7 +108,7 @@ implement wrapping text on the table:
 
 
 
-![[Screenshot 2024-08-01 at 2.18.52 PM.png]]
+![[Wireframe.png]]
 
 
 
