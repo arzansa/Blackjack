@@ -1,13 +1,17 @@
-  /*----- constants -----*/
+/*----- constants -----*/
 
 
-  /*----- state variables -----*/
+/*----- state variables -----*/
+let hands;
+let turn;
+let winner;
+let playerHand, dealerHand;
+let bankroll;
+
+/*----- cached elements  -----*/
 
 
-  /*----- cached elements  -----*/
+/*----- event listeners -----*/
 
 
-  /*----- event listeners -----*/
-
-
-  /*----- functions -----*/
+/*----- functions -----*/
