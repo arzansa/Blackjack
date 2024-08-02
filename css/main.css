@@ -1,0 +1,18 @@
+body {
+    background: rgb(29, 69, 19);
+    color: rgb(212, 69, 44);
+}
+
+#deal {
+    background: rgb(29, 69, 19);
+    color: rgb(212, 69, 44);
+}
+
+.hand {
+    border: 10px;
+    width: 12px;
+    height: 10px;
+    border-radius: 10px;
+    display: flex;
+    border-color: tomato;
+}
