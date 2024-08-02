@@ -9,10 +9,7 @@ body {
 }
 
 .hand {
-    border: 10px;
-    width: 12px;
-    height: 10px;
-    border-radius: 10px;
-    display: flex;
-    border-color: tomato;
+    width: 25vmin;
+    height: 35vmin;
+    border: 1px solid black;
 }

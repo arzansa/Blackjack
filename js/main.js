@@ -20,8 +20,12 @@ function init() {
     winner = false;
     bankroll = 5000;
 
+    render();
 }
 
+function render() {
+    
+}
 
 function deal() {
     return [updatePlayerHand(), updateDealerHand()];
@@ -32,7 +36,7 @@ function updatePlayerHand() {
 }
 
 function updateDealerHand() {
-    
+
 }
 
 
