@@ -8,7 +8,7 @@ Blackjack:
 	- Blackjack, dealer stand amount, deck of cards
 
 2. Define required variables used to track the state of the game:
-	- Array of decks in play and their score
+	- Array of hands in play and their score
 	- turn to check if player action or dealer action
 	- winner
 	- playerHand, dealerHand
