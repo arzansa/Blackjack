@@ -5,7 +5,6 @@
 let hands;
 let turn;
 let winner;
-let playerHand, dealerHand;
 let bankroll;
 
 /*----- cached elements  -----*/
@@ -15,3 +14,27 @@ let bankroll;
 
 
 /*----- functions -----*/
+function init() {
+    hands = deal();
+    turn = 'player';
+    winner = false;
+    bankroll = 5000;
+
+}
+
+
+function deal() {
+    return [updatePlayerHand(), updateDealerHand()];
+}
+
+function updatePlayerHand() {
+
+}
+
+function updateDealerHand() {
+    
+}
+
+
+
+init();
