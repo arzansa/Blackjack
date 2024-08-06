@@ -53,6 +53,7 @@ function deal() {
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
     updateHand(draw(), 'd');
+    updateHand(draw(), 'p');
     render();
 }
 
