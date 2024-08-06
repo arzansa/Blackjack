@@ -1,15 +1,29 @@
 body {
     background: rgb(29, 69, 19);
     color: rgb(212, 69, 44);
+    
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #deal {
     background: rgb(29, 69, 19);
-    color: rgb(212, 69, 44);
+    color: rgb(212, 69, 44);    
 }
 
+h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .hand {
-    width: 25vmin;
-    height: 35vmin;
-    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
