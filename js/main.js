@@ -37,12 +37,18 @@ const chip500El = document.getElementById('chip-500');
 const chip1000El = document.getElementById('chip-1000');
 const resetBtn = document.getElementById('reset');
 const headersEl = document.querySelectorAll('.headers');
+const playAgainBtn = document.getElementById('playAgain');
+const playAgainDblBtn = document.getElementById('playAgainDouble');
+const newWagerBtn = document.getElementById('newWager');
 
 /*----- event listeners -----*/
 dealBtn.addEventListener('click', deal);
 resetBtn.addEventListener('click', resetWager);
 hitBtn.addEventListener('click', hitPlayer);
 standBtn.addEventListener('click', stand);
+playAgainBtn.addEventListener('click', playAgain);
+playAgainDblBtn.addEventListener('click', playAgainDouble);
+newWagerBtn.addEventListener('click', newWager);
 wagerButtonsListener();
 
 
@@ -52,11 +58,42 @@ init();
 /*----- functions -----*/
 function init() {
     winner = '';
+    dealt = false;
     turn = false;
     wager = 0;
     bankroll = 5000;
     deck = DECK.slice();
     render();
+}
+
+function playAgain() {
+    bankroll -= wager;
+    winner = '';
+    turn = false;
+    dealt = false;
+    deck = DECK.slice();
+    clearHands();
+    deal();
+}
+
+function playAgainDouble() {
+    wager *= 2;
+    playAgain();
+}
+
+function newWager() {
+    wager = 0;
+    winner = '';
+    turn = false;
+    dealt = false;
+    deck = DECK.slice();
+    clearHands();
+    render();
+}
+
+function clearHands() {
+    hands.p = [];
+    hands.d = [];
 }
 
 function render() {
@@ -70,13 +107,24 @@ function renderMoney() {
     if (!turn) {
         wagerEl.innerHTML = `Wager: $${wager}`;
     } else if (winner == 'd') {
-        wagerEl.innerHTML = `Wager: $${wager}`;
+        wagerEl.innerHTML = `You lost! -$${wager}`;
+    } else if (winner == 'p' && scores.p != 21) {
+        wagerEl.innerHTML = `You won! +$${wager}`;
+    } else if (winner == 'p' && scores.p == 21) {
+        wagerEl.innerHTML = `You won! +$${wager*1.5} (Blackjack bonus x1.5)`;
+    } else if (winner == 't') {
+        wagerEl.innerHTML = `Push! Your wager has been returned.`;
     }
 
     bankrollEl.innerHTML = `Bankroll: $${bankroll}`;
 }
 
 function renderButtons() {
+    dealBtn.classList.remove("hidden");
+    resetBtn.classList.remove("hidden");
+    playAgainBtn.classList.add("hidden");
+    playAgainDblBtn.classList.add("hidden");
+    newWagerBtn.classList.add("hidden");
     if (wager == 0) {
         dealBtn.style.backgroundColor = "rgb(98, 109, 95)";
     } else {
@@ -87,11 +135,17 @@ function renderButtons() {
         resetBtn.classList.add("hidden");
         hitBtn.classList.remove("hidden");
         standBtn.classList.remove("hidden");
+        playAgainBtn.classList.add("hidden");
+        playAgainDblBtn.classList.add("hidden");
+        newWagerBtn.classList.add("hidden");
     }
 
     if (turn) {
         hitBtn.classList.add("hidden");
         standBtn.classList.add("hidden");
+        playAgainBtn.classList.remove("hidden");
+        playAgainDblBtn.classList.remove("hidden");
+        newWagerBtn.classList.remove("hidden");
     }
 
     if (bankroll < 1000 || dealt) {
@@ -141,7 +195,9 @@ function flipHiddenCard(flip) {
 
 function hitPlayer() {
     hit('p');
-    if (scores.p >= 21) turn = true;
+    if (scores.p >= 21) {
+        stand();
+    }
     render();
 }
 
@@ -167,7 +223,7 @@ function renderHands() {
 
     if(turn) {
         flipHiddenCard(true);
-    } else {
+    } else if (dealt) {
         flipHiddenCard(false);
     }
     
@@ -187,6 +243,7 @@ function checkForAces(hand) {
 }
 
 function renderMessages() {
+    headersEl[1].innerHTML = '';
     if (dealt === true) {
         headersEl[0].innerHTML = "Dealer's Hand";
         headersEl[2].innerHTML = "Player's Hand";
@@ -194,6 +251,10 @@ function renderMessages() {
             headersEl[3].innerHTML = `${scores.p - 10} / ${scores.p}`;
             return;
         }
+    } else if (dealt === false) {
+        headersEl[0].innerHTML = "";
+        headersEl[2].innerHTML = "";
+        headersEl[3].innerHTML = "";
     }
     if (turn) {
         if (scores.d == 21) {
@@ -209,7 +270,7 @@ function renderMessages() {
         headersEl[3].innerHTML = `Blackjack!`;
     } else if (scores.p > 21) {
         headersEl[3].innerHTML = `Bust! (${scores.p})`;
-    } else {
+    } else if (dealt) {
         headersEl[3].innerHTML = `${scores.p}`;
     }
 
@@ -223,13 +284,15 @@ function deal() {
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
     // updateHand('sA', 'p');
+    // updateHand('sA', 'd');
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
     // updateHand('sK', 'p');
+    // updateHand('sK', 'd');
     dealt = true;
     setScores();
     if (scores.p == 21) {
-        turn = true;
+        stand();
     }
     render();
 }
@@ -262,9 +325,31 @@ function setScores() {
     scores.d = dTotal;
 }
 
+function setWinner() {
+    if (scores.p > scores.d && scores.p <= 21) {
+        winner = 'p';
+    } else if (scores.p === scores.d && scores.p <= 21) {
+        winner = 't';
+    } else {
+        winner = 'd';
+    }
+}
+
 function stand() {
     turn = true;
+    setWinner();
+    addWinnings()
     render();
+}
+
+function addWinnings() {
+    if (winner == 'p' && scores.p == 21) {
+        bankroll += wager*2.5;
+    } else if (winner == 'p' && scores.p != 21) {
+        bankroll += wager*2;
+    } else if (winner == 't') {
+        bankroll += wager;
+    }
 }
 
 function updateHand(card, hand) {
