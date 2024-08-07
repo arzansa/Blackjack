@@ -13,6 +13,11 @@ let winner;
 let bankroll;
 let deck = [];
 let wager;
+let scores = {
+    p: 0,
+    d: 0
+}
+let turn;
 
 /*----- cached elements  -----*/
 const dealBtn = document.getElementById('deal');
@@ -37,6 +42,7 @@ const headersEl = document.querySelectorAll('.headers');
 dealBtn.addEventListener('click', deal);
 resetBtn.addEventListener('click', resetWager);
 hitBtn.addEventListener('click', hitPlayer);
+standBtn.addEventListener('click', stand);
 wagerButtonsListener();
 
 
@@ -45,7 +51,8 @@ init();
 
 /*----- functions -----*/
 function init() {
-    winner = false;
+    winner = '';
+    turn = false;
     wager = 0;
     bankroll = 5000;
     deck = DECK.slice();
@@ -56,10 +63,16 @@ function render() {
     renderMoney();
     renderHands();
     renderButtons();
+    renderMessages();
 }
 
 function renderMoney() {
-    wagerEl.innerHTML = `Wager: $${wager}`;
+    if (!turn) {
+        wagerEl.innerHTML = `Wager: $${wager}`;
+    } else if (winner == 'd') {
+        wagerEl.innerHTML = `Wager: $${wager}`;
+    }
+
     bankrollEl.innerHTML = `Bankroll: $${bankroll}`;
 }
 
@@ -75,6 +88,12 @@ function renderButtons() {
         hitBtn.classList.remove("hidden");
         standBtn.classList.remove("hidden");
     }
+
+    if (turn) {
+        hitBtn.classList.add("hidden");
+        standBtn.classList.add("hidden");
+    }
+
     if (bankroll < 1000 || dealt) {
         chip1000El.classList.add("hidden");
     } else if (bankroll > 1000 && chip1000El.classList.contains("hidden")) {
@@ -112,28 +131,89 @@ function renderButtons() {
     }
 }
 
+function flipHiddenCard(flip) {
+    if(!flip && !dHandEl.childNodes[1].classList.contains('back')) {
+        dHandEl.childNodes[1].classList.add('back');
+    } else if (flip && dHandEl.childNodes[1].classList.contains('back')) {
+        dHandEl.childNodes[1].classList.remove('back');
+    }
+}
+
 function hitPlayer() {
     hit('p');
+    if (scores.p >= 21) turn = true;
     render();
 }
 
 function hit(person) {
     updateHand(draw(), person);
+    setScores();
 }
+
 
 function renderHands() {
     dHandEl.innerHTML = '';
     pHandEl.innerHTML = '';
-    for(card in hands.d) {
-        dHandEl.innerHTML += `<div class="card ${hands.d[card]}"></div>`;
-        if (card == 1) {
-            thisCard = document.querySelector(`.${hands.d[card]}`);
-            thisCard.classList.add('back');
+
+    if (turn) {
+        while (scores.d < 17) {
+            hit('d');
         }
     }
+
+    for(card in hands.d) {
+        dHandEl.innerHTML += `<div class="card ${hands.d[card]}"></div>`;
+    }
+
+    if(turn) {
+        flipHiddenCard(true);
+    } else {
+        flipHiddenCard(false);
+    }
+    
+
     for(card in hands.p) {
         pHandEl.innerHTML += `<div class="card ${hands.p[card]}"></div>`;
     }
+}
+
+function checkForAces(hand) {
+    for (card of hand) {
+        if (card.slice(1) === 'A') {
+            return true;
+        }
+    }
+    return false;
+}
+
+function renderMessages() {
+    if (dealt === true) {
+        headersEl[0].innerHTML = "Dealer's Hand";
+        headersEl[2].innerHTML = "Player's Hand";
+        if (checkForAces(hands.p) && scores.p < 21) {
+            headersEl[3].innerHTML = `${scores.p - 10} / ${scores.p}`;
+            return;
+        }
+    }
+    if (turn) {
+        if (scores.d == 21) {
+            headersEl[1].innerHTML = `Blackjack!`;
+        } else if (scores.d > 21) {
+            headersEl[1].innerHTML = `Bust! (${scores.d})`;
+        } else {
+            headersEl[1].innerHTML = `${scores.d}`;
+        }
+    }
+
+    if (scores.p == 21) {
+        headersEl[3].innerHTML = `Blackjack!`;
+    } else if (scores.p > 21) {
+        headersEl[3].innerHTML = `Bust! (${scores.p})`;
+    } else {
+        headersEl[3].innerHTML = `${scores.p}`;
+    }
+
+
 }
 
 function deal() {
@@ -142,12 +222,48 @@ function deal() {
     }
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
+    // updateHand('sA', 'p');
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
+    // updateHand('sK', 'p');
     dealt = true;
-    headersEl[0].innerHTML = "Dealer's Hand";
-    headersEl[1].innerHTML = "Player's Hand";
-    headersEl[2].innerHTML = "1/1";
+    setScores();
+    if (scores.p == 21) {
+        turn = true;
+    }
+    render();
+}
+
+function scoreCards(cards, total) {
+    for(let card of cards) {
+        card = card.slice(1);
+
+        if ('JQK'.includes(card)) {
+            card = 10;
+        } else if ('A'.includes(card)) {
+            card = 11;
+        }
+        card = parseInt(card);
+        total += card;
+    }
+    return total;
+}
+
+function setScores() {
+    let pTotal = 0;
+    let dTotal = 0;
+    let pCards = hands.p;
+    let dCards = hands.d;
+
+    pTotal = scoreCards(pCards, pTotal);
+    dTotal = scoreCards(dCards, dTotal);
+
+    scores.p = pTotal;
+    scores.d = dTotal;
+}
+
+function stand() {
+    turn = true;
     render();
 }
 
@@ -176,7 +292,6 @@ function wagerButtonsListener() {
     for (let btn of chipBtns) {
         btn.addEventListener('click', function() {
             let value = btn.innerHTML;
-            console.log(value);
             if (bankroll > 0) {
                 wager += parseInt(value);
                 bankroll -= parseInt(value);
