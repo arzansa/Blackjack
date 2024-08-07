@@ -11,17 +11,35 @@
 </head>
 
 <body>
-  <h3>Dealer's hand</h3>
+  <h3 class="headers"></h3>
   <div id="dealerHand" class="hand">
   </div>
   
-  <div id="buttons">
+  <div id="controls">
     <button id="deal">DEAL</button>
+    <button id="reset">RESET WAGER</button>
+    <button id ="hit" class="hidden">HIT</button>
+    <button id ="stand" class="hidden">STAND</button>
+  </div>
+
+  <div id="wager"></div>
+
+  <div id="wagers">
+    <button class="chips" id="chip-1">1</button>
+    <button class="chips" id="chip-5">5</button>
+    <button class="chips" id="chip-10">10</button>
+    <button class="chips" id="chip-25">25</button>
+    <button class="chips" id="chip-100">100</button>
+    <button class="chips" id="chip-500">500</button>
+    <button class="chips" id="chip-1000">1000</button>
   </div>
   
-  <h3>Player's hand</h3>
+   <h3 class="headers"></h3>
+   <h5 class="headers"></h1>
   <div id="playerHand" class="hand">
   </div>
+  
+  <div id="bankroll"></div>
 </body>
 
 </html>

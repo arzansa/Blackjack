@@ -4,26 +4,91 @@ body {
     
 }
 
-#buttons {
+#bankroll {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#deal {
+#wager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3vmin;
+}
+
+#controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vmin;
+}
+
+button {
     background: rgb(29, 69, 19);
     color: rgb(212, 69, 44);    
 }
 
-h3 {
+h3, h5 {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+#wagers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2vmin;
+    gap: 2vmin;
+}
+
+.chips {
+    border-radius: 50%;
+    width: 6vmin;
+    height: 5.5vmin;
+    border: .5vmin dashed rgb(241, 242, 223);
+    color: rgb(241, 242, 223);
+    font-size: 1.6vmin;
+    }
+
+#chip-1 {
+    background: rgb(241, 242, 223);
+    border: .5vmin dashed black;
+    color: rgb(31, 32, 3);  
+    
+}
+
+#chip-5 {
+    background: rgb(216, 15, 15);
+}
+
+#chip-10 {
+    background: rgb(21, 21, 238);
+}
+
+#chip-25 {
+    background: rgb(8, 124, 8);
+}
+
+#chip-100 {
+    background: black;
+}
+
+#chip-500 {
+    background: purple;
+}
+
+#chip-1000 {
+    background: orange;
+}
 
 .hand {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.hidden {
+    display: none;
 }
