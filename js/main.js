@@ -458,3 +458,10 @@ function wagerButtonsListener() {
 }
 
 
+function flipButton(button, active) {
+    if (active == true) {
+        document.getElementById(button).disabled = false;
+    } else {
+        document.getElementById(button).disabled = true;
+    }
+}
