@@ -202,7 +202,6 @@ function playSound(sounds) {
     } else {
         sfx.volume = .05;
     }
-    console.log(`played sound ${sfx.src}`);
     sfx.currentTime = 0;
     sfx.play();
 }
