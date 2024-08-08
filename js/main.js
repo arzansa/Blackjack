@@ -72,6 +72,10 @@ function playAgain() {
     turn = false;
     dealt = false;
     deck = DECK.slice();
+    scores = {
+        p: 0,
+        d: 0
+    }
     clearHands();
     deal();
 }
@@ -86,6 +90,10 @@ function newWager() {
     winner = '';
     turn = false;
     dealt = false;
+    scores = {
+        p: 0,
+        d: 0
+    }
     deck = DECK.slice();
     clearHands();
     render();
@@ -96,10 +104,10 @@ function clearHands() {
     hands.d = [];
 }
 
-function render() {
-    renderMoney();
+function render() { 
     renderHands();
     renderButtons();
+    renderMoney();
     renderMessages();
 }
 
@@ -109,11 +117,11 @@ function renderMoney() {
     } else if (winner == 'd') {
         wagerEl.innerHTML = `You lost! -$${wager}`;
     } else if (winner == 'p' && scores.p != 21) {
-        wagerEl.innerHTML = `You won! +$${wager}`;
+        wagerEl.innerHTML = `You won! +$${wager*2}`;
     } else if (winner == 'p' && scores.p == 21) {
-        wagerEl.innerHTML = `You won! +$${wager*1.5} (Blackjack bonus x1.5)`;
+        wagerEl.innerHTML = `You won! +$${wager*2.5} (Blackjack win bonus x1.5)`;
     } else if (winner == 't') {
-        wagerEl.innerHTML = `Push! Your wager has been returned.`;
+        wagerEl.innerHTML = `Push! Your wager has been returned. (+$${wager})`;
     }
 
     bankrollEl.innerHTML = `Bankroll: $${bankroll}`;
@@ -211,11 +219,6 @@ function renderHands() {
     dHandEl.innerHTML = '';
     pHandEl.innerHTML = '';
 
-    if (turn) {
-        while (scores.d < 17) {
-            hit('d');
-        }
-    }
 
     for(card in hands.d) {
         dHandEl.innerHTML += `<div class="card ${hands.d[card]}"></div>`;
@@ -243,7 +246,10 @@ function checkForAces(hand) {
 }
 
 function renderMessages() {
-    headersEl[1].innerHTML = '';
+    headersEl[0].innerHTML = "";
+    headersEl[1].innerHTML = "";
+    headersEl[2].innerHTML = "";
+    headersEl[3].innerHTML = "";
     if (dealt === true) {
         headersEl[0].innerHTML = "Dealer's Hand";
         headersEl[2].innerHTML = "Player's Hand";
@@ -253,6 +259,7 @@ function renderMessages() {
         }
     } else if (dealt === false) {
         headersEl[0].innerHTML = "";
+        headersEl[1].innerHTML = "";
         headersEl[2].innerHTML = "";
         headersEl[3].innerHTML = "";
     }
@@ -283,8 +290,6 @@ function deal() {
     }
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
-    // updateHand('sA', 'p');
-    // updateHand('sA', 'd');
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
     // updateHand('sK', 'p');
@@ -298,7 +303,7 @@ function deal() {
 }
 
 function scoreCards(cards, total) {
-    for(let card of cards) {
+    for (let card of cards) {
         card = card.slice(1);
 
         if ('JQK'.includes(card)) {
@@ -326,9 +331,9 @@ function setScores() {
 }
 
 function setWinner() {
-    if (scores.p > scores.d && scores.p <= 21) {
+    if ((scores.p > scores.d && scores.p <= 21) || (scores.d > 21 && scores.p <= 21)) {
         winner = 'p';
-    } else if (scores.p === scores.d && scores.p <= 21) {
+    } else if (scores.p === scores.d) {
         winner = 't';
     } else {
         winner = 'd';
@@ -336,7 +341,11 @@ function setWinner() {
 }
 
 function stand() {
+    while (scores.d < 17) {
+        hit('d');
+    }
     turn = true;
+    setScores();
     setWinner();
     addWinnings()
     render();

@@ -60,15 +60,17 @@ h3, h5 {
 }
 
 #chip-5 {
-    background: rgb(216, 15, 15);
+    background: rgb(216, 15, 15); 
 }
 
 #chip-10 {
     background: rgb(21, 21, 238);
+    border: .5vmin dashed rgb(216, 15, 15);
 }
 
 #chip-25 {
     background: rgb(8, 124, 8);
+    border: .5vmin dashed orange;
 }
 
 #chip-100 {
@@ -77,10 +79,13 @@ h3, h5 {
 
 #chip-500 {
     background: purple;
+    border: .5vmin dashed orange;
 }
 
 #chip-1000 {
     background: orange;
+    border: .5vmin dashed black;
+    color: rgb(31, 32, 3);
 }
 
 .hand {
