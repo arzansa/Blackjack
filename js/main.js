@@ -128,10 +128,12 @@ function hit(person) {
 
 
 function hitPlayer() {
-    playSound(cardSounds);
+    
     hit('p');
     if (scores.p >= 21) {
         stand();
+    } else {
+        playSound(cardSounds);
     }
     render();
 }
@@ -194,12 +196,15 @@ function playAgainDouble() {
 
 function playSound(sounds) {
     let randomIdx = Math.floor(Math.random() * sounds.length);
+    let sfx = sounds[randomIdx];
     if (sounds == cardSounds) {
-        sounds[randomIdx].volume = .6;
+        sfx.volume = .6;
     } else {
-        sounds[randomIdx].volume = .05;
+        sfx.volume = .05;
     }
-    sounds[randomIdx].play();
+    console.log(`played sound ${sfx.src}`);
+    sfx.currentTime = 0;
+    sfx.play();
 }
 
 
