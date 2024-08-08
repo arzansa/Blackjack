@@ -65,7 +65,7 @@ init();
 
 /*----- functions -----*/
 function addWinnings() {
-    if (winner == 'p' && scores.p == 21 && checkForAces(hands.p.slice(0,2))) {
+    if (winner == 'p' && scores.p == 21 && hands.p.length == 2) {
         bankroll += wager*2.5;
     } else if (winner == 'p') {
         bankroll += wager*2;
@@ -97,8 +97,6 @@ function deal() {
     updateHand(draw(), 'p');
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
-    // updateHand('sK', 'p');
-    // updateHand('sK', 'd');
     dealt = true;
     setScores();
     if (scores.p == 21) {
@@ -198,9 +196,9 @@ function playSound(sounds) {
     let randomIdx = Math.floor(Math.random() * sounds.length);
     let sfx = sounds[randomIdx];
     if (sounds == cardSounds) {
-        sfx.volume = .6;
+        sfx.volume = 1;
     } else {
-        sfx.volume = .05;
+        sfx.volume = .1;
     }
     sfx.currentTime = 0;
     sfx.play();
@@ -296,7 +294,7 @@ function renderHands() {
 
 
     for(card in hands.d) {
-        dHandEl.innerHTML += `<div class="card ${hands.d[card]}"></div>`;
+        dHandEl.innerHTML += `<div class="card ${hands.d[card]}" title="${hands.d[card]}"></div>`;
     }
 
     if(turn) {
@@ -307,7 +305,7 @@ function renderHands() {
     
 
     for(card in hands.p) {
-        pHandEl.innerHTML += `<div class="card ${hands.p[card]}"></div>`;
+        pHandEl.innerHTML += `<div class="card ${hands.p[card]}" title="${hands.p[card]}"></div>`;
     }
 }
 
@@ -330,7 +328,7 @@ function renderMessages() {
         headersEl[3].innerHTML = "";
     }
     if (turn) {
-        if (scores.d == 21 && checkForAces(hands.d.slice(0,2))) {
+        if (scores.d == 21 && hands.d.length == 2) {
             headersEl[1].innerHTML = `Blackjack!`;
         } else if (scores.d > 21) {
             headersEl[1].innerHTML = `Bust! (${scores.d})`;
@@ -339,7 +337,7 @@ function renderMessages() {
         }
     }
 
-    if (scores.p == 21 && checkForAces(hands.p.slice(0,2))) {
+    if (scores.p == 21 && hands.p.length == 2) {
         headersEl[3].innerHTML = `Blackjack!`;
     } else if (scores.p > 21) {
         headersEl[3].innerHTML = `Bust! (${scores.p})`;
@@ -358,7 +356,7 @@ function renderMoney() {
         wagerEl.innerHTML = `Wager: $${wager}`;
     } else if (winner == 'd') {
         wagerEl.innerHTML = `You lost! -$${wager}`;
-    } else if (winner == 'p' && scores.p == 21 && checkForAces(hands.p.slice(0,2))) {
+    } else if (winner == 'p' && scores.p == 21 && hands.p.length == 2) {
         wagerEl.innerHTML = `You won! +$${wager*2.5} (Blackjack win bonus x1.5)`;
     } else if (winner == 'p') {
         wagerEl.innerHTML = `You won! +$${wager*2}`;
@@ -423,11 +421,11 @@ function setWinner() {
         winner = 'p';
     } else if (scores.p === scores.d && scores.p <= 21) {
         if (scores.p == 21 && scores.d == 21) {
-            if (!checkForAces(hands.d.slice(0,2))
-                && checkForAces(hands.p.slice(0,2))) {
+            if (!(hands.d.length == 2)
+                && hands.p.length == 2) {
                 winner = 'p';
-            } else if (checkForAces(hands.d.slice(0,2))
-                && !checkForAces(hands.p.slice(0,2))) {
+            } else if ((hands.d.length == 2)
+                && !(hands.p.length == 2)) {
                 winner = 'd';
             } else {
                 winner = 't';
