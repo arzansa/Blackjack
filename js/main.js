@@ -40,6 +40,10 @@ const headersEl = document.querySelectorAll('.headers');
 const playAgainBtn = document.getElementById('playAgain');
 const playAgainDblBtn = document.getElementById('playAgainDouble');
 const newWagerBtn = document.getElementById('newWager');
+const chipSounds = [];
+for (let i = 0; i < 9; i++) {
+    chipSounds.push(new Audio(`/audio/chip-sfx-${i}.wav`));
+}
 
 /*----- event listeners -----*/
 dealBtn.addEventListener('click', deal);
@@ -50,8 +54,6 @@ playAgainBtn.addEventListener('click', playAgain);
 playAgainDblBtn.addEventListener('click', playAgainDouble);
 newWagerBtn.addEventListener('click', newWager);
 wagerButtonsListener();
-
-
 
 init();
 
@@ -383,6 +385,10 @@ function wagerButtonsListener() {
     for (let btn of chipBtns) {
         btn.addEventListener('click', function() {
             let value = btn.innerHTML;
+            let randomIdx = Math.floor(Math.random() * chipSounds.length);
+            console.log(randomIdx);
+            chipSounds[randomIdx].volume = .05;
+            chipSounds[randomIdx].play();
             if (bankroll > 0) {
                 wager += parseInt(value);
                 bankroll -= parseInt(value);
