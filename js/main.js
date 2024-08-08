@@ -18,6 +18,7 @@ let scores = {
     d: 0
 }
 let turn;
+let pity;
 
 /*----- cached elements  -----*/
 const dealBtn = document.getElementById('deal');
@@ -26,6 +27,7 @@ const standBtn = document.getElementById('stand');
 const dHandEl = document.getElementById('dealerHand');
 const pHandEl = document.getElementById('playerHand');
 const chipBtns = document.querySelectorAll('.chips');
+const controlsEl = document.getElementById('controls');
 const wagerEl = document.getElementById('wager');
 const bankrollEl = document.getElementById('bankroll');
 const chip1El = document.getElementById('chip-1');
@@ -44,6 +46,10 @@ const chipSounds = [];
 for (let i = 0; i < 9; i++) {
     chipSounds.push(new Audio(`/audio/chip-sfx-${i}.wav`));
 }
+const cardSounds = [];
+for (let i = 0; i < 9; i++) {
+    cardSounds.push(new Audio(`/audio/card-sfx-${i}.wav`));
+}
 
 /*----- event listeners -----*/
 dealBtn.addEventListener('click', deal);
@@ -59,9 +65,9 @@ init();
 
 /*----- functions -----*/
 function addWinnings() {
-    if (winner == 'p' && scores.p == 21) {
+    if (winner == 'p' && scores.p == 21 && checkForAces(hands.p.slice(0,2))) {
         bankroll += wager*2.5;
-    } else if (winner == 'p' && scores.p != 21) {
+    } else if (winner == 'p') {
         bankroll += wager*2;
     } else if (winner == 't') {
         bankroll += wager;
@@ -83,6 +89,7 @@ function clearHands() {
 }
 
 function deal() {
+    playSound(cardSounds);
     if(wager <= 0) {
         return;
     }
@@ -121,6 +128,7 @@ function hit(person) {
 
 
 function hitPlayer() {
+    playSound(cardSounds);
     hit('p');
     if (scores.p >= 21) {
         stand();
@@ -139,7 +147,13 @@ function init() {
 }
 
 function newWager() {
+    playSound(cardSounds);
+    playSound(chipSounds);
     wager = 0;
+    if (bankroll == 0) {
+        bankroll = 1;
+        pity = true;
+    }
     winner = '';
     turn = false;
     dealt = false;
@@ -153,6 +167,9 @@ function newWager() {
 }
 
 function playAgain() {
+    if (bankroll < wager) {
+        return;
+    }
     bankroll -= wager;
     winner = '';
     turn = false;
@@ -167,9 +184,24 @@ function playAgain() {
 }
 
 function playAgainDouble() {
+    if (bankroll < wager * 2) {
+        return;
+    }
+    playSound(chipSounds);
     wager *= 2;
     playAgain();
 }
+
+function playSound(sounds) {
+    let randomIdx = Math.floor(Math.random() * sounds.length);
+    if (sounds == cardSounds) {
+        sounds[randomIdx].volume = .6;
+    } else {
+        sounds[randomIdx].volume = .05;
+    }
+    sounds[randomIdx].play();
+}
+
 
 function render() { 
     renderHands();
@@ -203,43 +235,53 @@ function renderButtons() {
         hitBtn.classList.add("hidden");
         standBtn.classList.add("hidden");
         playAgainBtn.classList.remove("hidden");
+        if (bankroll < wager) {
+            playAgainBtn.style.backgroundColor = "rgb(98, 109, 95)";
+        } else {
+            playAgainBtn.style.backgroundColor = "rgb(29, 69, 19)";
+        }
         playAgainDblBtn.classList.remove("hidden");
+        if (bankroll < wager * 2) {
+            playAgainDblBtn.style.backgroundColor = "rgb(98, 109, 95)";
+        } else {
+            playAgainDblBtn.style.backgroundColor = "rgb(29, 69, 19)";
+        }
         newWagerBtn.classList.remove("hidden");
     }
 
     if (bankroll < 1000 || dealt) {
         chip1000El.classList.add("hidden");
-    } else if (bankroll > 1000 && chip1000El.classList.contains("hidden")) {
+    } else if (bankroll >= 1000 && chip1000El.classList.contains("hidden")) {
         chip1000El.classList.remove("hidden");
     }
     if (bankroll < 500 || dealt) {
         chip500El.classList.add("hidden");
-    } else if (bankroll > 500 && chip500El.classList.contains("hidden")) {
+    } else if (bankroll >= 500 && chip500El.classList.contains("hidden")) {
         chip500El.classList.remove("hidden");
     }
     if (bankroll < 100 || dealt) {
         chip100El.classList.add("hidden");
-    } else if (bankroll > 100 && chip100El.classList.contains("hidden")) {
+    } else if (bankroll >= 100 && chip100El.classList.contains("hidden")) {
         chip100El.classList.remove("hidden");
     }
     if (bankroll < 25 || dealt) {
         chip25El.classList.add("hidden");
-    } else if (bankroll > 25 && chip25El.classList.contains("hidden")) {
+    } else if (bankroll >= 25 && chip25El.classList.contains("hidden")) {
         chip25El.classList.remove("hidden");
     }
     if (bankroll < 10 || dealt) {
         chip10El.classList.add("hidden");
-    } else if (bankroll > 10 && chip10El.classList.contains("hidden")) {
+    } else if (bankroll >= 10 && chip10El.classList.contains("hidden")) {
         chip10El.classList.remove("hidden");
     }
     if (bankroll < 5 || dealt) {
         chip5El.classList.add("hidden");
-    } else if (bankroll > 5 && chip5El.classList.contains("hidden")) {
+    } else if (bankroll >= 5 && chip5El.classList.contains("hidden")) {
         chip5El.classList.remove("hidden");
     }
     if (bankroll < 1 || dealt) {
         chip1El.classList.add("hidden");
-    } else if (bankroll > 1 && chip1El.classList.contains("hidden")) {
+    } else if (bankroll >= 1 && chip1El.classList.contains("hidden")) {
         chip1El.classList.remove("hidden");
     }
 }
@@ -284,7 +326,7 @@ function renderMessages() {
         headersEl[3].innerHTML = "";
     }
     if (turn) {
-        if (scores.d == 21) {
+        if (scores.d == 21 && checkForAces(hands.d.slice(0,2))) {
             headersEl[1].innerHTML = `Blackjack!`;
         } else if (scores.d > 21) {
             headersEl[1].innerHTML = `Bust! (${scores.d})`;
@@ -293,12 +335,17 @@ function renderMessages() {
         }
     }
 
-    if (scores.p == 21) {
+    if (scores.p == 21 && checkForAces(hands.p.slice(0,2))) {
         headersEl[3].innerHTML = `Blackjack!`;
     } else if (scores.p > 21) {
         headersEl[3].innerHTML = `Bust! (${scores.p})`;
     } else if (dealt) {
         headersEl[3].innerHTML = `${scores.p}`;
+    }
+
+    if (pity) {
+        headersEl[3].innerHTML = "Here's one on the house.";
+        pity = false;
     }
 }
 
@@ -307,10 +354,10 @@ function renderMoney() {
         wagerEl.innerHTML = `Wager: $${wager}`;
     } else if (winner == 'd') {
         wagerEl.innerHTML = `You lost! -$${wager}`;
-    } else if (winner == 'p' && scores.p != 21) {
-        wagerEl.innerHTML = `You won! +$${wager*2}`;
-    } else if (winner == 'p' && scores.p == 21) {
+    } else if (winner == 'p' && scores.p == 21 && checkForAces(hands.p.slice(0,2))) {
         wagerEl.innerHTML = `You won! +$${wager*2.5} (Blackjack win bonus x1.5)`;
+    } else if (winner == 'p') {
+        wagerEl.innerHTML = `You won! +$${wager*2}`;
     } else if (winner == 't') {
         wagerEl.innerHTML = `Push! Your wager has been returned. (+$${wager})`;
     }
@@ -319,6 +366,9 @@ function renderMoney() {
 }
 
 function resetWager() {
+    if (wager > 0) {
+        playSound(chipSounds);
+    }
     bankroll += wager;
     wager = 0;
     render();
@@ -353,6 +403,7 @@ function setScores() {
 }
 
 function stand() {
+    playSound(cardSounds);
     while (scores.d < 17) {
         hit('d');
     }
@@ -366,8 +417,20 @@ function stand() {
 function setWinner() {
     if ((scores.p > scores.d && scores.p <= 21) || (scores.d > 21 && scores.p <= 21)) {
         winner = 'p';
-    } else if (scores.p === scores.d) {
-        winner = 't';
+    } else if (scores.p === scores.d && scores.p <= 21) {
+        if (scores.p == 21 && scores.d == 21) {
+            if (!checkForAces(hands.d.slice(0,2))
+                && checkForAces(hands.p.slice(0,2))) {
+                winner = 'p';
+            } else if (checkForAces(hands.d.slice(0,2))
+                && !checkForAces(hands.p.slice(0,2))) {
+                winner = 'd';
+            } else {
+                winner = 't';
+            }
+        } else {
+            winner = 't';
+        }
     } else {
         winner = 'd';
     }
@@ -380,15 +443,11 @@ function updateHand(card, hand) {
         hands.d.push(card);
     }
 }
-
 function wagerButtonsListener() {
     for (let btn of chipBtns) {
         btn.addEventListener('click', function() {
             let value = btn.innerHTML;
-            let randomIdx = Math.floor(Math.random() * chipSounds.length);
-            console.log(randomIdx);
-            chipSounds[randomIdx].volume = .05;
-            chipSounds[randomIdx].play();
+            playSound(chipSounds);
             if (bankroll > 0) {
                 wager += parseInt(value);
                 bankroll -= parseInt(value);
