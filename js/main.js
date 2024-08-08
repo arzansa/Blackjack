@@ -44,11 +44,11 @@ const playAgainDblBtn = document.getElementById('playAgainDouble');
 const newWagerBtn = document.getElementById('newWager');
 const chipSounds = [];
 for (let i = 0; i < 9; i++) {
-    chipSounds.push(new Audio(`/audio/chip-sfx-${i}.wav`));
+    chipSounds.push(new Audio(`audio/chip-sfx-${i}.wav`));
 }
 const cardSounds = [];
 for (let i = 0; i < 9; i++) {
-    cardSounds.push(new Audio(`/audio/card-sfx-${i}.wav`));
+    cardSounds.push(new Audio(`audio/card-sfx-${i}.wav`));
 }
 
 /*----- event listeners -----*/
