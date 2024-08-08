@@ -29,3 +29,6 @@ After standing (or the player has busted (cards total over 21)) the dealer's hid
 
 - Add music
 - Add settings menu with volume slider
+- Add doubling and splitting
+- Multiple hands
+- animate card flipping

@@ -87,10 +87,10 @@ function clearHands() {
 }
 
 function deal() {
-    playSound(cardSounds);
     if(wager <= 0) {
         return;
     }
+    playSound(cardSounds);
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
     updateHand(draw(), 'd');
