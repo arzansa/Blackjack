@@ -26,7 +26,8 @@ body {
 
 button {
     background: rgb(29, 69, 19);
-    color: rgb(212, 69, 44);    
+    color: rgb(212, 69, 44);
+    cursor: pointer;  
 }
 
 h3, h5 {
