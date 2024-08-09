@@ -368,6 +368,17 @@ function renderMessages() {
     } else {
         headersEl[1].innerHTML = "";
     }
+
+    if (turn || winner) {
+        if (scores.d == 21 && hands.d.length == 2) {
+            headersEl[1].innerHTML = `Blackjack!`;
+        } else if (scores.d > 21) {
+            headersEl[1].innerHTML = `Bust! (${scores.d})`;
+        } else {
+            headersEl[1].innerHTML = `${scores.d}`;
+        }
+    }
+
     headersEl[2].innerHTML = "";
     headersEl[3].innerHTML = "";
     if (dealt === true) {
@@ -385,15 +396,6 @@ function renderMessages() {
         headersEl[0].innerHTML = "";
         headersEl[2].innerHTML = "";
         headersEl[3].innerHTML = "";
-    }
-    if (turn || winner) {
-        if (scores.d == 21 && hands.d.length == 2) {
-            headersEl[1].innerHTML = `Blackjack!`;
-        } else if (scores.d > 21) {
-            headersEl[1].innerHTML = `Bust! (${scores.d})`;
-        } else {
-            headersEl[1].innerHTML = `${scores.d}`;
-        }
     }
 
     if (scores.p == 21 && hands.p.length == 2) {
