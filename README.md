@@ -7,7 +7,7 @@ The game starts on the wagering screen where the player can select chips to plac
 <p align="center">
 <img src="https://i.imgur.com/DghkmCU.png">
 </p>
-<h6 style="text-align: center">(Toggle music and sound effects with the buttons in the bottom left and right corners of the screen)</h6>
+<h6 style="text-align: center">(Toggle music and sound effects with the buttons in the bottom left and right corners of the screen. Music will not play until prompted, sound effects play by default)</h6>
 
 The dealer and player will then both be dealt cards and the player will have the option to hit or stand:
 <p align="center">
