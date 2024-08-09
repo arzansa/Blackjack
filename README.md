@@ -18,6 +18,7 @@ After standing (or the player has busted (cards total over 21)) the dealer's hid
     <img src="https://i.imgur.com/C3v9JtO.png" style="margin: auto" />
 </p>
 
+The player can then play another round with the same wager, play another round with double their previous wager, or go back to the wagering screen to adjust their bet amount.
 
 # Technologies Used
 
