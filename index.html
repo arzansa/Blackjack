@@ -8,10 +8,13 @@
   <link href="css/cardstarter.css" rel="stylesheet" type="text/css" />
   <link href="css/main.css" rel="stylesheet" type="text/css" />
   <link rel="shortcut icon" href="images/ace.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Noto+Sans+Mono:wght@900&family=Oswald&display=swap" rel="stylesheet">
   <script defer src="js/main.js"></script>
 </head>
 
-<body>
+<body class="noto-sans-mono-font">
   <h3 class="headers"></h3>
   <h5 class="headers"></h5>
   <div id="dealerHand" class="hand"></div>
@@ -46,6 +49,34 @@
   <div id="playerHand" class="hand"></div>
   
   <div id="bankroll"></div>
+  <div id="howToPlay"><button id="howToPlayBtn">How to Play</button></div>
+  <div id="logoContainer">
+    <div id="title" class="noto-sans-mono-font">
+      <h1>
+      <span class="char1">B</span>
+      <span class="char2">L</span>
+      <span class="char3">A</span>
+      <span class="char4">C</span>
+      <span class="char5">K</span>
+      <span class="char6">J</span>
+      <span class="char7">A</span>
+      <span class="char8">C</span>
+      <span class="char9">K</span>
+    </div>
+  </h1>
+    <div id="logo">
+      <div id="cards">
+        <div class="card sA logoCard hidden" id="logoCard1"></div>
+        <div class="card cK logoCard hidden" id="logoCard2"></div>
+      </div>
+      <div id="logoChip1"><div></div></div>
+      <div id="logoChip2"></div>
+      <div id="logoChip3"></div>
+      <div id="logoChip4"></div>
+      <div id="logoChip5"></div>
+    </div>
+  </div>
+  
 </body>
 
 </html>
