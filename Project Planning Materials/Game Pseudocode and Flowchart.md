@@ -1,7 +1,7 @@
-Blackjack:
-![[Flowchart.png]]
-
-
+Flowchart:
+<p align="center">
+    <img src="https://i.imgur.com/bE1AKXc.png" style="margin: auto" />
+</p>
 
 
 1. Define required constants:
@@ -107,8 +107,10 @@ implement wrapping text on the table:
 "INSURANCE PAYS 2 TO 1"
 
 
-
-![[Wireframe.png]]
+Wireframe:
+<p align="center">
+    <img src="https://i.imgur.com/DAvI5n0.png" style="margin: auto" />
+</p>
 
 
 
