@@ -25,14 +25,16 @@ After standing (or the player has busted (cards total over 21)) the dealer's hid
 - HTML
 - CSS
 - CardStarter CSS Library
+- draw.io for the wireframe and flowchart found in the [planning materials](https://github.com/arzansa/Blackjack/tree/main/Project%20Planning%20Materials)
 - FL Studio (original SFX and music produced by me)
 - Aesprite (pixel art favicon created by me)
 
-# How to play Blackjack
 
-(From the 'How to Play' modal in game):
+
+
 
 <h2>How to Play Blackjack</h2>
+(From the 'How to Play' modal in game):
 <p>Blackjack is a card game in which the players and the dealer try to score as close to 21 as possible without exceeding it.</p>
 <h3>Basic Rules:</h3>
 <ul>
@@ -51,11 +53,12 @@ After standing (or the player has busted (cards total over 21)) the dealer's hid
     <li>Face cards (Jack, Queen, King) are each worth 10 points.</li>
     <li>Aces can be worth 1 or 11 points, Whichever is more favorable for the player.</li>
 </ul>
-<h5 id="note">Toggle music and sound effects with the buttons in the bottom left and right corners of the screen</h5>
+<h5 style="text-align: center">Toggle music and sound effects with the buttons in the bottom left and right corners of the screen</h5>
  
 
 # Getting Started
 
+[Planning Materials Document](https://github.com/arzansa/Blackjack/blob/main/Project%20Planning%20Materials/Game%20Pseudocode%20and%20Flowchart.md)
 
 [Click here to play now!](https://arzansa.github.io/Blackjack/)
 
