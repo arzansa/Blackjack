@@ -4,12 +4,15 @@ Blackjack is one of the most popular casino games due to its low house edge. It 
 # Screenshots
 
 The game starts on the wagering screen where the player can select chips to place their bet:
+
 <img src="https://i.imgur.com/DghkmCU.png">
 
 The dealer and player will then both be dealt cards and the player will have the option to hit or stand:
+
 <img src="https://i.imgur.com/cO9rirK.png">
 
 After standing (or the player has busted (cards total over 21)) the dealer's hidden card will be revealed, and the dealer will then draw up to 17, and if the player's card total is greater than the dealer's and they have not busted, they will win back double their wager:
+
 <img src="https://i.imgur.com/cO9rirK.png">
 
 
@@ -19,6 +22,8 @@ After standing (or the player has busted (cards total over 21)) the dealer's hid
 - HTML
 - CSS
 - CardStarter CSS Library
+- FL Studio (original SFX and music produced by me)
+- Aesprite (pixel art favicon created by me)
 
 # How to play Blackjack
 
