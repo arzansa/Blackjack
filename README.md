@@ -7,6 +7,7 @@ The game starts on the wagering screen where the player can select chips to plac
 <p align="center">
 <img src="https://i.imgur.com/DghkmCU.png">
 </p>
+<h6 style="text-align: center">(Toggle music and sound effects with the buttons in the bottom left and right corners of the screen)</h6>
 
 The dealer and player will then both be dealt cards and the player will have the option to hit or stand:
 <p align="center">
@@ -54,7 +55,7 @@ The player can then play another round with the same wager, play another round w
     <li>Face cards (Jack, Queen, King) are each worth 10 points.</li>
     <li>Aces can be worth 1 or 11 points, Whichever is more favorable for the player.</li>
 </ul>
-<h5 style="text-align: center">Toggle music and sound effects with the buttons in the bottom left and right corners of the screen</h5>
+
  
 
 # Getting Started
