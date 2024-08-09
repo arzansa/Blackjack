@@ -475,7 +475,7 @@ function setScores() {
 }
 
 function stand() {
-    playSound(cardSounds);
+    if (sfx) playSound(cardSounds);
     while (scores.d < 17) {
         hit('d');
     }
