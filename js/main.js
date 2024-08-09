@@ -20,6 +20,7 @@ let pity;
 let logo;
 let music;
 let sound;
+let rollover;
 
 /*----- cached elements  -----*/
 const dealBtn = document.getElementById('deal');
@@ -166,6 +167,7 @@ function init() {
     logo = logoContainerEl.innerHTML;
     music = false;
     sfx = true;
+    rollover = false;
     deck = DECK.slice();
     render();
 }
@@ -183,6 +185,7 @@ function newWager() {
     winner = '';
     turn = false;
     dealt = false;
+    rollover = false;
     scores = {
         p: 0,
         d: 0
@@ -200,6 +203,7 @@ function playAgain() {
     winner = '';
     turn = false;
     dealt = false;
+    rollover = false;
     deck = DECK.slice();
     scores = {
         p: 0,
@@ -364,20 +368,7 @@ function renderMessages() {
     } else {
         headersEl[1].innerHTML = "";
     }
-    headersEl[2].innerHTML = "";
-    headersEl[3].innerHTML = "";
-    if (dealt === true) {
-        headersEl[0].innerHTML = "Dealer's Hand";
-        headersEl[2].innerHTML = "Player's Hand";
-        if (checkForAces(hands.p) && scores.p < 21) {
-            headersEl[3].innerHTML = `${scores.p - 10} / ${scores.p}`;
-            return;
-        }
-    } else if (dealt === false) {
-        headersEl[0].innerHTML = "";
-        headersEl[2].innerHTML = "";
-        headersEl[3].innerHTML = "";
-    }
+
     if (turn || winner) {
         if (scores.d == 21 && hands.d.length == 2) {
             headersEl[1].innerHTML = `Blackjack!`;
@@ -386,6 +377,25 @@ function renderMessages() {
         } else {
             headersEl[1].innerHTML = `${scores.d}`;
         }
+    }
+
+    headersEl[2].innerHTML = "";
+    headersEl[3].innerHTML = "";
+    if (dealt === true) {
+        headersEl[0].innerHTML = "Dealer's Hand";
+        headersEl[2].innerHTML = "Player's Hand";
+        if (checkForAces(hands.p) && scores.p < 21) {
+            if (!rollover) {
+                headersEl[3].innerHTML = `${scores.p - 10} / ${scores.p}`;
+            } else {
+                headersEl[3].innerHTML = `${scores.p}`;
+            }
+            return;
+        }
+    } else if (dealt === false) {
+        headersEl[0].innerHTML = "";
+        headersEl[2].innerHTML = "";
+        headersEl[3].innerHTML = "";
     }
 
     if (scores.p == 21 && hands.p.length == 2) {
@@ -428,6 +438,7 @@ function resetWager() {
 }
 
 function scoreCards(cards, total) {
+    let ace = 0;
     for (let card of cards) {
         card = card.slice(1);
 
@@ -435,10 +446,18 @@ function scoreCards(cards, total) {
             card = 10;
         } else if ('A'.includes(card)) {
             card = 11;
+            ace += 1;
         }
         card = parseInt(card);
         total += card;
     }
+    if (cards == hands.p && total > 21) {
+        rollover = true;
+    }
+    while (total > 21 && ace > 0) {
+            total -= 10;
+            ace -= 1;
+        }
     return total;
 }
 
