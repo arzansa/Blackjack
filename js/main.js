@@ -18,6 +18,8 @@ let scores = {
 let turn;
 let pity;
 let logo;
+let music;
+let sound;
 
 /*----- cached elements  -----*/
 const dealBtn = document.getElementById('deal');
@@ -44,6 +46,8 @@ const playAgainDblBtn = document.getElementById('playAgainDouble');
 const newWagerBtn = document.getElementById('newWager');
 const logoContainerEl = document.getElementById('logoContainer');
 const howToPlayBtn = document.getElementById('howToPlayBtn');
+const sfxBtn = document.getElementById('sfxButton');
+const musicBtn = document.getElementById('music-button');
 const chipSounds = [];
 for (let i = 0; i < 9; i++) {
     chipSounds.push(new Audio(`audio/chip-sfx-${i}.wav`));
@@ -52,6 +56,9 @@ const cardSounds = [];
 for (let i = 0; i < 9; i++) {
     cardSounds.push(new Audio(`audio/card-sfx-${i}.wav`));
 }
+const song = new Audio('audio/song-0.mp3');
+const modalEl = document.getElementById("howToPlayModal");
+const closeModalEl = document.getElementsByClassName("close")[0];
 
 /*----- event listeners -----*/
 dealBtn.addEventListener('click', deal);
@@ -61,6 +68,10 @@ standBtn.addEventListener('click', stand);
 playAgainBtn.addEventListener('click', playAgain);
 playAgainDblBtn.addEventListener('click', playAgainDouble);
 newWagerBtn.addEventListener('click', newWager);
+sfxBtn.addEventListener('click', toggleSfx);
+musicBtn.addEventListener('click', toggleMusic);
+howToPlayBtn.addEventListener('click', displayModal);
+closeModalEl.addEventListener('click', closeModal);
 wagerButtonsListener();
 
 init();
@@ -94,7 +105,7 @@ function deal() {
     if(wager <= 0) {
         return;
     }
-    playSound(cardSounds);
+    if (sfx) playSound(cardSounds);
     updateHand(draw(), 'd');
     updateHand(draw(), 'p');
     updateHand(draw(), 'd');
@@ -105,6 +116,14 @@ function deal() {
         stand();
     }
     render();
+}
+
+function closeModal() {
+    modalEl.style.display = "none";
+}
+
+function displayModal() {
+    modalEl.style.display = "block";
 }
 
 function draw() {
@@ -133,7 +152,7 @@ function hitPlayer() {
     if (scores.p >= 21) {
         stand();
     } else {
-        playSound(cardSounds);
+        if (sfx) playSound(cardSounds);
     }
     render();
 }
@@ -145,13 +164,17 @@ function init() {
     wager = 0;
     bankroll = 5000;
     logo = logoContainerEl.innerHTML;
+    music = false;
+    sfx = true;
     deck = DECK.slice();
     render();
 }
 
 function newWager() {
-    playSound(cardSounds);
-    playSound(chipSounds);
+    if (sfx) {
+        playSound(cardSounds);
+        playSound(chipSounds);
+    }
     wager = 0;
     if (bankroll < 1) {
         bankroll = 1;
@@ -190,7 +213,7 @@ function playAgainDouble() {
     if (bankroll < wager * 2) {
         return;
     }
-    playSound(chipSounds);
+    if (sfx) playSound(chipSounds);
     wager *= 2;
     playAgain();
 }
@@ -201,7 +224,7 @@ function playSound(sounds) {
     if (sounds == cardSounds) {
         sfx.volume = 1;
     } else {
-        sfx.volume = .1;
+        sfx.volume = .05;
     }
     sfx.currentTime = 0;
     sfx.play();
@@ -214,6 +237,10 @@ function render() {
     renderMoney();
     renderMessages();
     renderLogo();
+    if (song.ended && music) {
+        music = false;
+        toggleMusic();
+    }
 }
 
 function renderLogo() {
@@ -393,7 +420,7 @@ function renderMoney() {
 
 function resetWager() {
     if (wager > 0) {
-        playSound(chipSounds);
+        if (sfx) playSound(chipSounds);
     }
     bankroll += wager;
     wager = 0;
@@ -462,6 +489,33 @@ function setWinner() {
     }
 }
 
+function toggleMusic() {
+    if (!music) {
+        song.volume = 0.3;
+        song.currentTime = 0;
+        song.play();
+        music = true;
+        musicBtn.style.backgroundColor = '#E69384';
+    } else {
+        song.volume = 0;
+        music = false;
+        musicBtn.style.backgroundColor = '#7c7a7a';
+    }
+}
+
+function toggleSfx() {
+    if (sfx) {
+        sfx = false;
+        sfxBtn.innerHTML = '🔇';
+        sfxBtn.style.backgroundColor = '#7c7a7a';
+    } else { 
+        sfx = true;
+        sfxBtn.innerHTML = '🔈';
+        sfxBtn.style.backgroundColor = '#E69384';
+    }
+    render();
+}
+
 function updateHand(card, hand) {
     if (hand === 'p') {
         hands.p.push(card);
@@ -473,8 +527,9 @@ function wagerButtonsListener() {
     for (let btn of chipBtns) {
         btn.addEventListener('click', function() {
             let value = btn.innerHTML;
-            playSound(chipSounds);
+            if (sfx) playSound(chipSounds);
             if (bankroll > 0) {
+                if(value == '10k') value = 10000;
                 wager += parseInt(value);
                 bankroll -= parseInt(value);
             }
