@@ -320,8 +320,6 @@ h1 span {
     height: 200px;
     position: absolute;
     width: 20px;
-    /* left: 0;
-    top: 0; */
     padding-bottom: 12vmin;
     transform-origin: bottom center;
 }
