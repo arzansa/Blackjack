@@ -428,6 +428,7 @@ function resetWager() {
 }
 
 function scoreCards(cards, total) {
+    let ace = 0;
     for (let card of cards) {
         card = card.slice(1);
 
@@ -435,10 +436,15 @@ function scoreCards(cards, total) {
             card = 10;
         } else if ('A'.includes(card)) {
             card = 11;
+            ace += 1;
         }
         card = parseInt(card);
         total += card;
     }
+    while (total > 21 && ace > 0) {
+            total -= 10;
+            ace -= 1;
+        }
     return total;
 }
 
