@@ -17,6 +17,7 @@ let scores = {
 }
 let turn;
 let pity;
+let logo;
 
 /*----- cached elements  -----*/
 const dealBtn = document.getElementById('deal');
@@ -40,6 +41,8 @@ const headersEl = document.querySelectorAll('.headers');
 const playAgainBtn = document.getElementById('playAgain');
 const playAgainDblBtn = document.getElementById('playAgainDouble');
 const newWagerBtn = document.getElementById('newWager');
+const logoContainerEl = document.getElementById('logoContainer');
+const howToPlayBtn = document.getElementById('howToPlayBtn');
 const chipSounds = [];
 for (let i = 0; i < 9; i++) {
     chipSounds.push(new Audio(`audio/chip-sfx-${i}.wav`));
@@ -140,6 +143,7 @@ function init() {
     turn = false;
     wager = 0;
     bankroll = 5000;
+    logo = logoContainerEl.innerHTML;
     deck = DECK.slice();
     render();
 }
@@ -208,9 +212,20 @@ function render() {
     renderButtons();
     renderMoney();
     renderMessages();
+    renderLogo();
+}
+
+function renderLogo() {
+    if (turn || dealt) {
+        logoContainerEl.innerHTML = "";
+    }
+    else {
+        logoContainerEl.innerHTML = logo;
+    }
 }
 
 function renderButtons() {
+    howToPlayBtn.classList.remove("hidden");
     dealBtn.classList.remove("hidden");
     resetBtn.classList.remove("hidden");
     playAgainBtn.classList.add("hidden");
@@ -229,12 +244,14 @@ function renderButtons() {
         playAgainBtn.classList.add("hidden");
         playAgainDblBtn.classList.add("hidden");
         newWagerBtn.classList.add("hidden");
+        howToPlayBtn.classList.add("hidden");
     }
 
     if (turn) {
         hitBtn.classList.add("hidden");
         standBtn.classList.add("hidden");
         playAgainBtn.classList.remove("hidden");
+        howToPlayBtn.classList.add("hidden");
         if (bankroll < wager) {
             playAgainBtn.style.backgroundColor = "rgb(98, 109, 95)";
         } else {
@@ -325,7 +342,7 @@ function renderMessages() {
         headersEl[2].innerHTML = "";
         headersEl[3].innerHTML = "";
     }
-    if (turn) {
+    if (turn || winner) {
         if (scores.d == 21 && hands.d.length == 2) {
             headersEl[1].innerHTML = `Blackjack!`;
         } else if (scores.d > 21) {

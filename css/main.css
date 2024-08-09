@@ -28,7 +28,20 @@ button {
     background: rgb(29, 69, 19);
     /* color: rgb(212, 69, 44); */
     color: #E69384;
-    cursor: pointer;  
+    cursor: pointer;
+    font-family: "Noto Sans Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+}
+
+#howToPlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vmin;
 }
 
 h3, h5 {
@@ -57,8 +70,7 @@ h3, h5 {
 #chip-1 {
     background: rgb(241, 242, 223);
     border: .5vmin dashed black;
-    color: rgb(31, 32, 3);  
-    
+    color: rgb(31, 32, 3);
 }
 
 #chip-5 {
@@ -90,6 +102,117 @@ h3, h5 {
     color: rgb(31, 32, 3);
 }
 
+#logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2vmin;
+    flex-direction: column;
+}
+
+#logo {
+    display: block;
+    position: relative;
+    width: 50vmin;
+    height: 50vmin;
+}
+
+.logoCard {
+    margin-top: 20vmin;
+    z-index: 1;
+}
+
+#logoCard1 {
+    margin-left: 10vmin;
+    z-index: 5;
+    position: relative;
+}
+
+#logoCard2 {
+    margin-left: -10vmin;
+    z-index: 10;
+    position: relative;
+}
+
+#cards {
+    position: absolute;
+    top: -15%;
+    right: 35%;
+}
+
+/* .card.logoCard {
+
+} */
+
+#title {
+    font-size: 3vmin;
+}
+
+#logoChip1 {
+    border-radius: 50%;
+    width: 12vmin;
+    height: 11vmin;
+    background: purple;
+    border: 2vmin dashed orange;
+    font-size: 1.6vmin;
+    z-index: 100;
+    position: absolute;
+    bottom: 45%;
+    right: 33%;
+}
+
+#logoChip2 {
+    border-radius: 50%;
+    width: 12vmin;
+    height: 11vmin;
+    background: rgb(216, 15, 15);
+    border: 2vmin dashed rgb(241, 242, 223);
+    font-size: 1.6vmin;
+    z-index: 95;
+    position: absolute;
+    bottom: 49%;
+    right: 40%;
+}
+
+#logoChip3 {
+    border-radius: 50%;
+    width: 12vmin;
+    height: 11vmin;
+    background: rgb(21, 21, 238);
+    border: 2vmin dashed rgb(216, 15, 15);
+    font-size: 1.6vmin;
+    z-index: 99;
+    position: absolute;
+    bottom: 49%;
+    right: 25%;
+}
+
+#logoChip4 {
+    border-radius: 50%;
+    width: 12vmin;
+    height: 11vmin;
+    background: rgb(8, 124, 8);
+    border: 2vmin dashed purple;
+    font-size: 1.6vmin;
+    z-index: 92;
+    position: absolute;
+    bottom: 38%;
+    right: 40%;
+}
+
+#logoChip5 {
+    border-radius: 50%;
+    width: 12vmin;
+    height: 11vmin;
+    border: 2vmin dashed black;
+    background: rgb(241, 242, 223);
+    font-size: 1.6vmin;
+    z-index: 93;
+    position: absolute;
+    bottom: 39%;
+    right: 24%;
+}
+
 .hand {
     display: flex;
     justify-content: center;
@@ -99,3 +222,36 @@ h3, h5 {
 .hidden {
     display: none;
 }
+
+.noto-sans-mono-font {
+    font-family: "Noto Sans Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+}
+
+
+
+/* https://css-tricks.com/set-text-on-a-circle/ */
+
+h1 span {
+    height: 200px;
+    position: absolute;
+    width: 20px;
+    /* left: 0;
+    top: 0; */
+    padding-bottom: 12vmin;
+    transform-origin: bottom center;
+}
+
+.char1 { transform: rotate(-48deg); }
+.char2 { transform: rotate(-36deg); }
+.char3 { transform: rotate(-24deg); }
+.char4 { transform: rotate(-12deg); }
+.char5 { transform: rotate(0deg); }
+.char6 { transform: rotate(12deg); }
+.char7 { transform: rotate(24deg); }
+.char8 { transform: rotate(36deg); }
+.char9 { transform: rotate(48deg); }
