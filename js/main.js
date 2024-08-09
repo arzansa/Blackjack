@@ -36,6 +36,7 @@ const chip25El = document.getElementById('chip-25');
 const chip100El = document.getElementById('chip-100');
 const chip500El = document.getElementById('chip-500');
 const chip1000El = document.getElementById('chip-1000');
+const chip10000El = document.getElementById('chip-10000');
 const resetBtn = document.getElementById('reset');
 const headersEl = document.querySelectorAll('.headers');
 const playAgainBtn = document.getElementById('playAgain');
@@ -266,6 +267,11 @@ function renderButtons() {
         newWagerBtn.classList.remove("hidden");
     }
 
+    if (bankroll < 10000 || dealt) {
+        chip10000El.classList.add("hidden");
+    } else if (bankroll >= 10000 && chip10000El.classList.contains("hidden")) {
+        chip10000El.classList.remove("hidden");
+    }
     if (bankroll < 1000 || dealt) {
         chip1000El.classList.add("hidden");
     } else if (bankroll >= 1000 && chip1000El.classList.contains("hidden")) {
