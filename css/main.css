@@ -42,6 +42,10 @@ button {
     margin-top: 5vmin;
 }
 
+#howToHeader {
+    text-align: center;
+}
+
 h3, h5 {
     display: flex;
     justify-content: center;
@@ -53,8 +57,7 @@ h3, h5 {
 }
 
 .music-button > button {
-    background-color: #E69384;
-    
+    background-color: #7c7a7a;
     position: fixed;
     bottom: 1vmin;
     left: 1vmin;
