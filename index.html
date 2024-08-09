@@ -30,6 +30,7 @@
     <button id ="newWager" class="hidden">NEW WAGER</button>
   </div>
 
+
   <div id="chipPile"></div>
 
   <div id="wager"></div>
@@ -50,7 +51,34 @@
   <div id="playerHand" class="hand"></div>
   
   <div id="bankroll"></div>
+  
   <div id="howToPlay"><button id="howToPlayBtn">How to Play</button></div>
+  <div id="howToPlayModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>How to Play Blackjack</h2>
+    <p>Blackjack is a card game in which the players and the dealer try to score as close to 21 as possible without exceeding it.</p>
+    <h3>Basic Rules:</h3>
+    <ul>
+      <li>This version is played with one deck that shuffles each hand and currently supports only one player.</li>
+      <li>First, the player wagers a bet. Then the dealer and the player are both dealt two cards. One of the dealer's cards is dealt face down, and is only revealed after the player's turn is finished.</li>
+      <li>As the player, you can choose to "hit" (take another card) or "stand" (keep your current hand). You can hit as many times as you want until you hit 21 or bust.</li>
+      <li>If the player's total exceeds 21, they bust and lose the hand and their wager.</li>
+      <li>If the player's total is closer to 21 than the dealer's without busting, the player wins double their wager.</li>
+      <li>If the dealer and the player are tied, it is a "push", and the player's wager is returned.</li>
+      <li>If the player has a natural Blackjack (A + 10 or face card), the wager is paid back 3 to 2, barring a push. Natural Blackjack always beats a regular 21.</li>
+      <li>Splitting and Doubling down are not currently supported in this version.</li>
+    </ul>
+    <h3>Card Values:</h3>
+    <ul>
+      <li>Number cards (2-10) are worth their face value.</li>
+      <li>Face cards (Jack, Queen, King) are each worth 10 points.</li>
+      <li>Aces can be worth 1 or 11 points, Whichever is more favorable for the player.</li>
+    </ul>
+    </div>
+  </div>
+  
+  
   <div id="logoContainer">
     <div id="title" class="noto-sans-mono-font">
       <h1>
@@ -78,6 +106,12 @@
     </div>
   </div>
   
+  <div class="music-button">
+    <button id="music-button">🎶</button>
+  </div>
+  <div class="sfx-button">
+    <button id="sfxButton" class="off">🔈</button>
+  </div>
 </body>
 
 </html>
