@@ -15,7 +15,7 @@ The dealer and player will then both be dealt cards and the player will have the
 
 After standing (or the player has busted (cards total over 21)) the dealer's hidden card will be revealed, and the dealer will then draw up to 17, and if the player's card total is greater than the dealer's and they have not busted, they will win back double their wager:
 <p align="center">
-    <img src="https://i.imgur.com/cO9rirK.png" style="margin: auto" />
+    <img src="https://i.imgur.com/C3v9JtO.png" style="margin: auto" />
 </p>
 
 
