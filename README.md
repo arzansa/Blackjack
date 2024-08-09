@@ -5,7 +5,7 @@ Blackjack is one of the most popular casino games due to its low house edge. It 
 
 The game starts on the wagering screen where the player can select chips to place their bet:
 
-<img src="https://i.imgur.com/DghkmCU.png">
+<img src="https://i.imgur.com/DghkmCU.png" style="text-align: center">
 
 The dealer and player will then both be dealt cards and the player will have the option to hit or stand:
 
