@@ -50,12 +50,17 @@ h3, h5 {
     align-items: center;
 }
 
+#pity {
+    min-height: 4vmin;
+}
+
 #wagers {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 2vmin;
     gap: 2vmin;
+    min-height: 6vmin;
 }
 
 .chips {
