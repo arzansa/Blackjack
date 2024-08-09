@@ -326,7 +326,11 @@ function renderHands() {
 
 function renderMessages() {
     headersEl[0].innerHTML = "";
-    headersEl[1].innerHTML = "";
+    if (dealt) {
+        headersEl[1].innerHTML = `${'JQK'.includes(hands.d[0].slice(1)) ? 10 : 'A'.includes(hands.d[0].slice(1)) ? 'A (1/11)' : parseInt(hands.d[0].slice(1))}`;
+    } else {
+        headersEl[1].innerHTML = "";
+    }
     headersEl[2].innerHTML = "";
     headersEl[3].innerHTML = "";
     if (dealt === true) {
@@ -338,7 +342,6 @@ function renderMessages() {
         }
     } else if (dealt === false) {
         headersEl[0].innerHTML = "";
-        headersEl[1].innerHTML = "";
         headersEl[2].innerHTML = "";
         headersEl[3].innerHTML = "";
     }

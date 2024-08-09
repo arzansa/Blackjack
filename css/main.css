@@ -1,7 +1,7 @@
 body {
     background: rgb(29, 69, 19);
     /* color: rgb(212, 69, 44); */
-    color: #E69384; 
+    color: #E69384;
 }
 
 #bankroll {
@@ -234,7 +234,7 @@ h3, h5 {
 
 
 
-/* https://css-tricks.com/set-text-on-a-circle/ */
+/* referenced: https://css-tricks.com/set-text-on-a-circle/ */
 
 h1 span {
     height: 200px;
